@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
+
+
 import { Search, Menu, X } from 'lucide-react';
 import Auth from './Auth';
 
@@ -9,6 +12,9 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
+
+}
+
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -44,6 +50,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center space-x-6">
+
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
             <Link to="/browse" className="text-gray-700 hover:text-blue-600 transition-colors">Browse Hustles</Link>
             <Link to="/add-review" className="text-gray-700 hover:text-blue-600 transition-colors">Add Review</Link>

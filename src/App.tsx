@@ -6,7 +6,6 @@ import { supabase } from './supabaseClient';
 import AddSideHustle from './pages/AddSideHustle';
 import HomePage from './pages/HomePage';
 
-
 function BrowseHustles() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gradient-to-br from-green-50 via-blue-50 to-white py-10">

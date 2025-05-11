@@ -62,25 +62,37 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ sideHustleId, onSubmit }) => {
   ) => {
     return (
       <div className="mb-4">
+
         <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
           {label === "Income Rating" && <span className="mr-1">💸</span>}
           {label === "Effort Rating" && <span className="mr-1">💪</span>}
           {label === "Satisfaction Rating" && <span className="mr-1">😊</span>}
           {label}
         </label>
+
+        <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+
         <div className="flex space-x-2">
           {[1, 2, 3, 4, 5].map(rating => (
             <button
               key={rating}
               type="button"
               onClick={() => onChange(rating)}
+
               className={`w-8 h-8 rounded-full flex items-center justify-center text-lg font-bold
+
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm
+
                 ${value >= rating 
                   ? 'bg-blue-500 text-white' 
                   : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}
               `}
             >
+
               {"⭐"}
+
+              {rating}
+
             </button>
           ))}
         </div>
@@ -89,6 +101,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ sideHustleId, onSubmit }) => {
   };
 
   return (
+
     <div className="flex justify-center items-center min-h-[60vh] bg-gradient-to-br from-yellow-50 via-blue-50 to-white py-10">
       <div className="bg-white p-8 rounded-2xl shadow-xl border border-blue-100 w-full max-w-lg">
         <form onSubmit={handleSubmit}>
@@ -97,6 +110,15 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ sideHustleId, onSubmit }) => {
             <h3 className="text-2xl font-bold text-blue-700 flex items-center">Leave a Review <span className="ml-2">⭐</span></h3>
           </div>
         
+
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <div className="flex items-center space-x-2 mb-4">
+        <Smile className="text-blue-500" size={20} />
+        <h3 className="text-lg font-semibold">I tried it!</h3>
+      </div>
+      
+      <form onSubmit={handleSubmit}>
+
         {/* Comment textarea */}
         <div className="mb-4">
           <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
@@ -141,12 +163,20 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ sideHustleId, onSubmit }) => {
         {/* Submit button */}
         <button
           type="submit"
+
           className="w-full md:w-auto px-7 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center justify-center text-lg mt-4"
         >
           <span role="img" aria-label="sparkles" className="mr-2">✨</span> Submit Review
         </button>
         </form>
       </div>
+
+          className="w-full md:w-auto px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+        >
+          Submit Review
+        </button>
+      </form>
+b
     </div>
   );
 };
