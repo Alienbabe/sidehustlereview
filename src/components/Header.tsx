@@ -12,9 +12,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
-
-}
-
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,7 +21,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -50,7 +46,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex items-center space-x-6">
-
             <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
             <Link to="/browse" className="text-gray-700 hover:text-blue-600 transition-colors">Browse Hustles</Link>
             <Link to="/add-review" className="text-gray-700 hover:text-blue-600 transition-colors">Add Review</Link>
@@ -59,13 +54,10 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
             {user && (
               <Link to="/dashboard" className="text-blue-700 font-semibold">Dashboard</Link>
             )}
-            
-
-  {/* Auth links */}
-  <div className="ml-4 hidden md:block">
-    <Auth />
-  </div>
-            
+            {/* Auth links */}
+            <div className="ml-4 hidden md:block">
+              <Auth />
+            </div>
             {/* Search form */}
             <form onSubmit={handleSearchSubmit} className="relative">
               <input
@@ -83,7 +75,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
               </button>
             </form>
           </nav>
-
           {/* Mobile menu button */}
           <button 
             className="md:hidden text-gray-700"
@@ -92,7 +83,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4">
@@ -101,7 +91,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Browse Hustles</a>
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Add Review</a>
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">About</a>
-              
               {/* Search form for mobile */}
               <form onSubmit={handleSearchSubmit} className="relative">
                 <input
@@ -124,6 +113,4 @@ const Header: React.FC<HeaderProps> = ({ onSearch, user }) => {
       </div>
     </header>
   );
-};
-
-export default Header;
+};export default Header;
