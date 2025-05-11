@@ -1,0 +1,147 @@
+import React, { useState } from 'react';
+import { filterTags } from '../services/data';
+import CategoryTag from './CategoryTag';
+import { FilterTag } from '../types';
+import { Smile } from 'lucide-react';
+
+interface ReviewFormProps {
+  sideHustleId: string;
+  onSubmit: (review: any) => void;
+}
+
+const ReviewForm: React.FC<ReviewFormProps> = ({ sideHustleId, onSubmit }) => {
+  const [comment, setComment] = useState('');
+  const [moneyRating, setMoneyRating] = useState(0);
+  const [effortRating, setEffortRating] = useState(0);
+  const [satisfactionRating, setSatisfactionRating] = useState(0);
+  const [selectedTags, setSelectedTags] = useState<FilterTag[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Create review object
+    const review = {
+      sideHustleId,
+      comment,
+      ratings: {
+        money: moneyRating,
+        effort: effortRating,
+        satisfaction: satisfactionRating
+      },
+      tags: selectedTags,
+      date: new Date().toISOString(),
+      // In a real app, user info would come from auth
+      userId: 'temp-user-id',
+      userName: 'Your Name'
+    };
+    
+    onSubmit(review);
+    
+    // Reset form
+    setComment('');
+    setMoneyRating(0);
+    setEffortRating(0);
+    setSatisfactionRating(0);
+    setSelectedTags([]);
+  };
+
+  // Toggle a tag selection
+  const toggleTag = (tag: FilterTag) => {
+    setSelectedTags(prevTags => 
+      prevTags.includes(tag)
+        ? prevTags.filter(t => t !== tag)
+        : [...prevTags, tag]
+    );
+  };
+
+  // Render star rating input
+  const renderRatingInput = (
+    value: number, 
+    onChange: (rating: number) => void,
+    label: string
+  ) => {
+    return (
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+        <div className="flex space-x-2">
+          {[1, 2, 3, 4, 5].map(rating => (
+            <button
+              key={rating}
+              type="button"
+              onClick={() => onChange(rating)}
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm
+                ${value >= rating 
+                  ? 'bg-blue-500 text-white' 
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}
+              `}
+            >
+              {rating}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+      <div className="flex items-center space-x-2 mb-4">
+        <Smile className="text-blue-500" size={20} />
+        <h3 className="text-lg font-semibold">I tried it!</h3>
+      </div>
+      
+      <form onSubmit={handleSubmit}>
+        {/* Comment textarea */}
+        <div className="mb-4">
+          <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
+            Share your experience
+          </label>
+          <textarea
+            id="comment"
+            rows={3}
+            value={comment}
+            onChange={e => setComment(e.target.value)}
+            placeholder="What was your experience with this side hustle?"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            required
+          />
+        </div>
+        
+        {/* Ratings */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {renderRatingInput(moneyRating, setMoneyRating, "Income Rating")}
+          {renderRatingInput(effortRating, setEffortRating, "Effort Rating")}
+          {renderRatingInput(satisfactionRating, setSatisfactionRating, "Satisfaction Rating")}
+        </div>
+        
+        {/* Tags */}
+        <div className="mt-4 mb-5">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Add tags to your review
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {filterTags.map(tag => (
+              <CategoryTag
+                key={tag}
+                label={tag}
+                type="filter"
+                selected={selectedTags.includes(tag)}
+                onClick={() => toggleTag(tag)}
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Submit button */}
+        <button
+          type="submit"
+          className="w-full md:w-auto px-6 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+        >
+          Submit Review
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ReviewForm;
