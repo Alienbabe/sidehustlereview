@@ -24,9 +24,12 @@ const HomePage: React.FC<HomePageProps> = ({ onSideHustleClick }) => {
       // Patch: ensure averageRatings is always present
       const safeData = data.map((hustle: any) => ({
         ...hustle,
-        averageRatings: hustle.averageRatings || { money: 0, effort: 0, satisfaction: 0 },
-        tags: hustle.tags || [],
-        categories: hustle.categories || [],
+        averageRatings:
+          typeof hustle.averageRatings === 'object' && hustle.averageRatings !== null && !Array.isArray(hustle.averageRatings)
+            ? hustle.averageRatings
+            : { money: 0, effort: 0, satisfaction: 0 },
+        tags: Array.isArray(hustle.tags) ? hustle.tags : [],
+        categories: Array.isArray(hustle.categories) ? hustle.categories : [],
       }));
       setSideHustles(safeData);
     }
