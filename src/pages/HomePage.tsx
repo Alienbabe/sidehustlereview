@@ -18,13 +18,22 @@ const HomePage: React.FC<HomePageProps> = ({ onSideHustleClick }) => {
   const [sideHustles, setSideHustles] = useState<SideHustle[]>([]);
 
   useEffect(() => {
-    const fetchSideHustles = async () => {
-      const { data, error } = await supabase.from('side_hustles').select('*');
-      if (data) setSideHustles(data);
-      // Optionally handle error
-    };
-    fetchSideHustles();
-  }, []);
+  const fetchSideHustles = async () => {
+    const { data, error } = await supabase.from('side_hustles').select('*');
+    if (data) {
+      // Patch: ensure averageRatings is always present
+      const safeData = data.map((hustle: any) => ({
+        ...hustle,
+        averageRatings: hustle.averageRatings || { money: 0, effort: 0, satisfaction: 0 },
+        tags: hustle.tags || [],
+        categories: hustle.categories || [],
+      }));
+      setSideHustles(safeData);
+    }
+    // Optionally handle error
+  };
+  fetchSideHustles();
+}, []);
 
   // Filter side hustles based on selections
   const filteredSideHustles = (): SideHustle[] => {
@@ -139,13 +148,20 @@ const HomePage: React.FC<HomePageProps> = ({ onSideHustleClick }) => {
           <div className="mt-6">
             {filteredSideHustles().length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredSideHustles().map(hustle => (
-                  <SideHustleCard 
-                    key={hustle.id} 
-                    sideHustle={hustle} 
-                    onClick={onSideHustleClick}
-                  />
-                ))}
+                {filteredSideHustles().map(hustle => {
+                  // Defensive: ensure averageRatings is always defined
+                  const safeHustle = {
+                    ...hustle,
+                    averageRatings: hustle.averageRatings || { money: 0, effort: 0, satisfaction: 0 }
+                  };
+                  return (
+                    <SideHustleCard 
+                      key={safeHustle.id} 
+                      sideHustle={safeHustle} 
+                      onClick={onSideHustleClick}
+                    />
+                  );
+                })}
               </div>
             ) : (
               <div className="text-center py-12">

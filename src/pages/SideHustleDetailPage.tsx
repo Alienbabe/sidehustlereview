@@ -65,9 +65,9 @@ const SideHustleDetailPage: React.FC<SideHustleDetailPageProps> = ({
     // Update side hustle stats (simplified)
     if (sideHustle) {
       const newRatingsAvg = {
-        money: (sideHustle.averageRatings.money * sideHustle.reviewCount + review.ratings.money) / (sideHustle.reviewCount + 1),
-        effort: (sideHustle.averageRatings.effort * sideHustle.reviewCount + review.ratings.effort) / (sideHustle.reviewCount + 1),
-        satisfaction: (sideHustle.averageRatings.satisfaction * sideHustle.reviewCount + review.ratings.satisfaction) / (sideHustle.reviewCount + 1)
+        money: ((sideHustle.averageRatings?.money ?? 0) * sideHustle.reviewCount + review.ratings.money) / (sideHustle.reviewCount + 1),
+        effort: ((sideHustle.averageRatings?.effort ?? 0) * sideHustle.reviewCount + review.ratings.effort) / (sideHustle.reviewCount + 1),
+        satisfaction: ((sideHustle.averageRatings?.satisfaction ?? 0) * sideHustle.reviewCount + review.ratings.satisfaction) / (sideHustle.reviewCount + 1)
       };
       
       setSideHustle({
@@ -123,33 +123,33 @@ const SideHustleDetailPage: React.FC<SideHustleDetailPageProps> = ({
               <div className="flex items-center">
                 <EmojiRating 
                   type="money" 
-                  value={sideHustle.averageRatings.money} 
+                  value={sideHustle.averageRatings?.money ?? 0} 
                   size="lg" 
                 />
                 <span className="ml-2 text-gray-700">
-                  {sideHustle.averageRatings.money.toFixed(1)} Income
+                  {(sideHustle.averageRatings?.money ?? 0).toFixed(1)} Income
                 </span>
               </div>
               
               <div className="flex items-center">
                 <EmojiRating 
                   type="effort" 
-                  value={sideHustle.averageRatings.effort} 
+                  value={sideHustle.averageRatings?.effort ?? 0} 
                   size="lg" 
                 />
                 <span className="ml-2 text-gray-700">
-                  {sideHustle.averageRatings.effort.toFixed(1)} Effort
+                  {(sideHustle.averageRatings?.effort ?? 0).toFixed(1)} Effort
                 </span>
               </div>
               
               <div className="flex items-center">
                 <EmojiRating 
                   type="satisfaction" 
-                  value={sideHustle.averageRatings.satisfaction} 
+                  value={sideHustle.averageRatings?.satisfaction ?? 0} 
                   size="lg" 
                 />
                 <span className="ml-2 text-gray-700">
-                  {sideHustle.averageRatings.satisfaction.toFixed(1)} Satisfaction
+                  {(sideHustle.averageRatings?.satisfaction ?? 0).toFixed(1)} Satisfaction
                 </span>
               </div>
               

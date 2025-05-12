@@ -4,11 +4,16 @@ export interface SideHustle {
   description: string;
   categories: string[];
   tags: string[];
-  averageRatings: {
+  /**
+   * Average ratings for this side hustle. May be undefined if not yet rated.
+   * Always check for existence before accessing.
+   */
+  averageRatings?: {
     money: number;
     effort: number;
     satisfaction: number;
   };
+
   reviewCount: number;
 }
 
